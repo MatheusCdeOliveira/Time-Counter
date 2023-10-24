@@ -1,95 +1,34 @@
+'use client'
 import Image from 'next/image'
 import styles from './page.module.css'
+import { useEffect, useState } from 'react'
 
 export default function Home() {
+  const [time, setTime] = useState(new Date());
+  const [isClient, setIsClient] = useState(false);
+  const begin = new Date("April 21, 2023 12:00:00");
+
+  const presentDay = time;
+  const oneDay = 1000 * 60 * 60 * 24;
+  const difference = presentDay - begin;
+  const currentHours = presentDay.getHours();
+  const currentMinutes = presentDay.getMinutes();
+  const currentSec = presentDay.getSeconds().toString().padStart(2, '0');
+  const totalDays = Math.floor(difference / oneDay);
+
+  useEffect(() => {
+    const intervalId = setInterval(() => setTime(new Date()), 1000);
+    setIsClient(true);
+    return () => {
+      clearInterval(intervalId);
+    };
+  }, []);
+
   return (
-    <main className={styles.main}>
-      <div className={styles.description}>
-        <p>
-          Get started by editing&nbsp;
-          <code className={styles.code}>src/app/page.js</code>
-        </p>
-        <div>
-          <a
-            href="https://vercel.com?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            By{' '}
-            <Image
-              src="/vercel.svg"
-              alt="Vercel Logo"
-              className={styles.vercelLogo}
-              width={100}
-              height={24}
-              priority
-            />
-          </a>
-        </div>
-      </div>
-
-      <div className={styles.center}>
-        <Image
-          className={styles.logo}
-          src="/next.svg"
-          alt="Next.js Logo"
-          width={180}
-          height={37}
-          priority
-        />
-      </div>
-
-      <div className={styles.grid}>
-        <a
-          href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          className={styles.card}
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2>
-            Docs <span>-&gt;</span>
-          </h2>
-          <p>Find in-depth information about Next.js features and API.</p>
-        </a>
-
-        <a
-          href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          className={styles.card}
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2>
-            Learn <span>-&gt;</span>
-          </h2>
-          <p>Learn about Next.js in an interactive course with&nbsp;quizzes!</p>
-        </a>
-
-        <a
-          href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          className={styles.card}
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2>
-            Templates <span>-&gt;</span>
-          </h2>
-          <p>Explore the Next.js 13 playground.</p>
-        </a>
-
-        <a
-          href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          className={styles.card}
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2>
-            Deploy <span>-&gt;</span>
-          </h2>
-          <p>
-            Instantly deploy your Next.js site to a shareable URL with Vercel.
-          </p>
-        </a>
-      </div>
+    <main>
+     <h1>DIAS SEM FUMAR</h1>
+     <h1>{`${totalDays} DIAS `}</h1>
+     <h2>{`${currentHours}:${currentMinutes}:${currentSec}`}</h2>
     </main>
   )
 }
