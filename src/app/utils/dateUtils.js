@@ -2,12 +2,11 @@ function convertToDays(date) {
   const startDate = new Date('April 21, 2023 00:00:00');
   const presentDay = date;
   const oneDay = 1000 * 60 * 60 * 24;
-  const difference = presentDay - startDate;
-  const totalDays = Math.floor(difference / oneDay);
+  const totalDays = Math.floor((presentDay - startDate) / oneDay);
   const actualHours = date.getHours().toString().padStart(2, '0');
   const actualMinutes = date.getMinutes().toString().padStart(2, '0');
   const actualSeconds = date.getSeconds().toString().padStart(2, '0');
-  return { totalDays, actualHours, actualMinutes, actualSeconds };
+  return { totalDays, actualHours, actualMinutes, actualSeconds, startDate };
 }
 
 /**
@@ -17,12 +16,8 @@ function convertToDays(date) {
  */
 
 export function getDays(date) {
-  const { 
-    totalDays,
-    actualHours,
-    actualMinutes,
-    actualSeconds
-  } = convertToDays(date);
+  const { totalDays, actualHours, actualMinutes, actualSeconds } =
+    convertToDays(date);
   return { totalDays, actualHours, actualMinutes, actualSeconds };
 }
 
@@ -33,10 +28,22 @@ export function getDays(date) {
  */
 
 export function getMonths(date) {
-  const { totalDays } = convertToDays(date);
+  const { totalDays, startDate } = convertToDays(date);
+  const allMonths = [31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31];
   const months = Math.floor(totalDays / 30);
-  const remainingDays = totalDays - (months * 30);
-  return { months, remainingDays };
+  let remainingDays = totalDays % 30;
+
+  const startMonth = startDate.getMonth();
+  const stopMonth = date.getMonth();
+  // console.log(startMonth)
+  // console.log(stop)
+
+  return {
+    months,
+    remainingDays:
+      remainingDays -
+      allMonths.slice(startMonth, stopMonth).filter((m) => m === 31).length,
+  };
 }
 
 export function getWeeks(date) {
@@ -52,16 +59,12 @@ export function getYears(date) {
 }
 
 export function getSeconds(date) {
-  const {
-    totalDays,
-    actualHours,
-    actualMinutes,
-    actualSeconds
-   } = convertToDays(date);
-  const seconds = 
-  (Number(totalDays) * 86400) + 
-  (Number(actualHours) * 60 * 60) + 
-  (Number(actualMinutes) * 60) + 
-  Number(actualSeconds);
+  const { totalDays, actualHours, actualMinutes, actualSeconds } =
+    convertToDays(date);
+  const seconds =
+    Number(totalDays) * 86400 +
+    Number(actualHours) * 60 * 60 +
+    Number(actualMinutes) * 60 +
+    Number(actualSeconds);
   return { seconds };
 }
