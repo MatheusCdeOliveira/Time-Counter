@@ -66,12 +66,10 @@
 h1,
 h2 {
   text-align: center;
+  font-size: 62px;
+  color: rgba(222, 184, 135, 0.758);
 }
 
-
-main {
-  padding: 20px;
-}
 
 * {
   box-sizing: border-box;

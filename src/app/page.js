@@ -1,23 +1,24 @@
 'use client';
-import Image from 'next/image';
-import styles from './page.module.css';
 import { useState } from 'react';
 import SelectDate from './components/selectDate/selectDate';
+import './styles/home.css';
 
 export default function Home() {
   const [timeSelected, setTimeSelected] = useState('dias');
 
   return (
-    <main>
-      <button onClick={() => setTimeSelected('segundos')}>Segundos</button>
-      <button onClick={() => setTimeSelected('dias')}>Dias</button>
-      <button onClick={() => setTimeSelected('semanas')}>Semanas</button>
-      <button onClick={() => setTimeSelected('meses')}>Meses</button>
-      <button onClick={() => setTimeSelected('anos')}>Anos</button>
-      <h1>{`${
-        timeSelected ? timeSelected.toUpperCase() : 'TEMPO'
-      } SEM FUMAR`}</h1>
+    <main className='container'>
+    <div className='buttons-select'>
+      <button className='btn' onClick={() => setTimeSelected('segundos')}>Segundos</button>
+      <button className='btn' onClick={() => setTimeSelected('dias')}>Dias</button>
+      <button className='btn' onClick={() => setTimeSelected('semanas')}>Semanas</button>
+      <button className='btn' onClick={() => setTimeSelected('meses')}>Meses</button>
+      <button className='btn' onClick={() => setTimeSelected('anos')}>Anos</button>
+    </div>
+      <div className='counter'>
+      <h1 className='heading'>{`${timeSelected.toUpperCase()} SEM FUMAR`}</h1>
       <SelectDate timeSelected={timeSelected} />
+    </div>
     </main>
   );
 }

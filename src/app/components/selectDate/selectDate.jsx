@@ -1,5 +1,5 @@
 import { timeContext } from '@/app/context/context';
-import { useContext, useEffect, useState } from 'react';
+import { useContext, useEffect } from 'react';
 import Days from '../days/days';
 import Months from '../months/months';
 import Weeks from '../weeks/weeks';
@@ -7,22 +7,22 @@ import Years from '../years/years';
 import Seconds from '../seconds/seconds';
 
 export default function SelectDate({ timeSelected }) {
-  const { time, setTime } = useContext(timeContext);
+  const { date, setDate } = useContext(timeContext);
 
   const components = {
-    segundos: <Seconds time={time} />,
-    dias: <Days time={time} />,
-    meses: <Months time={time} />,
-    semanas: <Weeks time={time}/>,
-    anos: <Years time={time}/>,
+    segundos: <Seconds date={date} />,
+    dias: <Days date={date} />,
+    meses: <Months date={date} />,
+    semanas: <Weeks date={date}/>,
+    anos: <Years date={date}/>,
   };
 
   useEffect(() => {
-    const intervalId = setInterval(() => setTime(new Date()), 1000);
+    const intervalId = setInterval(() => setDate(new Date()), 1000);
     return () => {
       clearInterval(intervalId);
     };
-  }, [setTime]);
+  }, [setDate]);
 
   return <div>{components[timeSelected]}</div>;
 }

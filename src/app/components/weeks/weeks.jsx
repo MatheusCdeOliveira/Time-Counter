@@ -1,7 +1,7 @@
 import { getWeeks} from '@/app/utils/dateUtils';
 
-export default function Weeks({ time }) {
-  const { weeks } = getWeeks(time);
+export default function Weeks({ date }) {
+  const { weeks } = getWeeks(date);
 
   return (
     <div>
