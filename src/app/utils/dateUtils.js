@@ -1,10 +1,10 @@
 function convertToDays(date) {
-  const startDate = new Date('April 21, 2023 12:00:00');
+  const startDate = new Date('April 21, 2023 00:00:00');
   const presentDay = date;
   const oneDay = 1000 * 60 * 60 * 24;
   const difference = presentDay - startDate;
   const totalDays = Math.floor(difference / oneDay);
-  const actualHours = date.getHours();
+  const actualHours = date.getHours().toString().padStart(2, '0');
   const actualMinutes = date.getMinutes().toString().padStart(2, '0');
   const actualSeconds = date.getSeconds().toString().padStart(2, '0');
   return { totalDays, actualHours, actualMinutes, actualSeconds };
@@ -58,10 +58,10 @@ export function getSeconds(date) {
     actualMinutes,
     actualSeconds
    } = convertToDays(date);
-  const seconds =
-    totalDays * 24 * 60 * 60 +
-    actualHours * 60 * 60 +
-    actualMinutes * 60 +
-    actualSeconds;
+  const seconds = 
+  (Number(totalDays) * 86400) + 
+  (Number(actualHours) * 60 * 60) + 
+  (Number(actualMinutes) * 60) + 
+  Number(actualSeconds);
   return { seconds };
 }
